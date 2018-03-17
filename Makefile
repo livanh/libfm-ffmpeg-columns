@@ -1,3 +1,5 @@
+prefix=/usr
+
 MODULES = gtk-column-ffmpeg-bitrate \
           gtk-column-ffmpeg-video-framerate \
           gtk-column-ffmpeg-video-bitrate \
@@ -11,14 +13,17 @@ MODULES = gtk-column-ffmpeg-bitrate \
           gtk-column-ffmpeg-audio-codec-long \
           gtk-column-ffmpeg-audio-codec
 
-LIBDIR = /usr/lib/x86_64-linux-gnu
+target=$(shell gcc -dumpmachine)
+libdir = $(DESTDIR)$(prefix)/lib/$(target)
 CFLAGS = `pkg-config --cflags libfm gtk+-2.0 libavcodec libavformat libavutil`
-AM_LDFLAGS = -rpath $(LIBDIR) -no-undefined -module -avoid-version -lavcodec -lavformat -lavutil
+LDFLAGS = -rpath $(libdir) -no-undefined -module -avoid-version -lavcodec -lavformat -lavutil
 
 all:
-	$(foreach MODULE,$(MODULES),libtool --mode=compile gcc $(CFLAGS) -c $(MODULE).c;)
-	$(foreach MODULE,$(MODULES),libtool --mode=link gcc $(AM_LDFLAGS) $(MODULE).lo -o $(MODULE).la;)
+	mkdir -p build
+	$(foreach MODULE,$(MODULES),libtool --mode=compile gcc $(CFLAGS) -c src/$(MODULE).c -o build/$(MODULE).o;)
+	$(foreach MODULE,$(MODULES),libtool --mode=link gcc $(LDFLAGS) build/$(MODULE).lo -o build/$(MODULE).la;)
 
 install:
-	$(foreach MODULE,$(MODULES),libtool --mode=install install -c $(MODULE).la $(LIBDIR)/libfm/modules/;)
-	libtool --finish $(LIBDIR)/libfm/modules/
+	$(foreach MODULE,$(MODULES),libtool --mode=install install -c build/$(MODULE).la $(libdir)/libfm/modules/;)
+	libtool --finish $(libdir)/libfm/modules/
+
