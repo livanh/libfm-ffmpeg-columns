@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 9), gcc, libtool, libfm-gtk-dev, libgtk2.0-dev|libg
 
 Package: libfm-ffmpeg-columns
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, pcmanfm, libavcodec57, libavformat57, libavutil6
+Depends: ${shlibs:Depends}, ${misc:Depends}, pcmanfm, libavcodec57, libavformat57, libavutil55
 Priority: optional
 Section: utils
 Description: libfm ffmpeg modules
