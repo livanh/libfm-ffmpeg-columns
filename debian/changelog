@@ -1,4 +1,12 @@
-libfm-ffmpeg-columns (0.1-1) UNRELEASED; urgency=low
+libfm-ffmpeg-columns (0.1-2) testing; urgency=medium
+
+  * Changed email address
+  * Update libav* dependencies
+  * Fix architecture
+
+ -- Livanh <livanh@protonmail.com>  Sun, 09 Dec 2018 12:14:21 +0100
+
+libfm-ffmpeg-columns (0.1-1) testing; urgency=low
 
   * Initial release.
 

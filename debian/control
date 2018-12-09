@@ -1,13 +1,13 @@
 Source: libfm-ffmpeg-columns
-Maintainer: Livanh <livanh@bulletmail.org>
+Maintainer: Livanh <livanh@protonmail.com>
 Section: utils
 Priority: optional
 Standards-Version: 3.9.2
 Build-Depends: debhelper (>= 9), gcc, libtool, libfm-gtk-dev, libgtk2.0-dev|libgtk-3-dev, libavcodec-dev, libavformat-dev, libavutil-dev
 
 Package: libfm-ffmpeg-columns
-Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, pcmanfm, libavcodec57, libavformat57, libavutil55
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, pcmanfm, libavcodec58, libavformat58, libavutil56
 Priority: optional
 Section: utils
 Description: libfm ffmpeg modules
