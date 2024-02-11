@@ -16,7 +16,7 @@ MODULES = gtk-column-ffmpeg-bitrate \
 target=$(shell gcc -dumpmachine)
 builddir=.build
 libdir = $(DESTDIR)$(prefix)/lib/$(target)
-CFLAGS = `pkg-config --cflags libfm gtk+-2.0 libavcodec libavformat libavutil`
+CFLAGS = `pkg-config --cflags libfm libfm-gtk3 libavcodec libavformat libavutil`
 LDFLAGS = -rpath $(libdir) -no-undefined -module -avoid-version -lavcodec -lavformat -lavutil
 
 all:

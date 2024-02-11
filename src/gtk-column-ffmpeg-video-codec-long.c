@@ -69,8 +69,6 @@ const AVCodecDescriptor* get_video_codec( FmFileInfo *fi ) {
 	AVCodecParameters *vparam;
 	int ret;
 	
-	av_register_all();
-	
 	filename = fm_path_to_str( fm_file_info_get_path(fi) );
 	ret = avformat_open_input( &fmt_ctx, filename, NULL, NULL );
 	free( filename );
