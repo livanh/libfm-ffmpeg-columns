@@ -30,19 +30,19 @@ GType get_type() { return G_TYPE_STRING; };
 
 typedef struct {
 	int n_channels;
-	uint64_t channel_layout;
+	AVChannelLayout *channel_layout;
 } t_channels;
 
 t_channels get_channels( FmFileInfo *fi );
 
 void get_value( FmFileInfo *fi, GValue *value ) {
 	t_channels channels = get_channels( fi );
-	if ( channels.n_channels <= 0 ) {
+	if ( channels.n_channels <= 0 || channels.channel_layout == NULL ) {
 		return;
 	}
 	
-	char channels_string[15];
-	av_get_channel_layout_string( channels_string, 15, channels.n_channels, channels.channel_layout );
+	char channels_string[20];
+	av_channel_layout_describe( channels.channel_layout, channels_string, 20 );
 	g_value_set_string( value, channels_string );
 };
 
@@ -62,14 +62,12 @@ FmFolderModelColumnInit fm_module_init_gtk_folder_col = {
 
 t_channels get_channels( FmFileInfo *fi ) {
 	char *filename;
-	t_channels channels = { 0, 0 };
+	t_channels channels = { 0, NULL };
 	AVFormatContext *fmt_ctx = NULL;
 	int astream_index;
 	AVStream *astream;
 	AVCodecParameters *aparam;
 	int ret;
-	
-	av_register_all();
 	
 	filename = fm_path_to_str( fm_file_info_get_path(fi) );
 	ret = avformat_open_input( &fmt_ctx, filename, NULL, NULL );
@@ -100,8 +98,8 @@ t_channels get_channels( FmFileInfo *fi ) {
 	astream = fmt_ctx->streams[astream_index];
 	aparam = astream->codecpar;
 	
-	channels.n_channels = aparam->channels;
-	channels.channel_layout = aparam->channel_layout;
+	channels.n_channels = aparam->ch_layout.nb_channels;
+	channels.channel_layout = &aparam->ch_layout;
 	avformat_close_input( &fmt_ctx );
 	return channels;
 }
