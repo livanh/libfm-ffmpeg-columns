@@ -1,3 +1,9 @@
+libfm-ffmpeg-columns (0.2-2) testing; urgency=medium
+
+  * Update build dependencies
+
+ -- Livanh <livanh@protonmail.com>  Mon, 12 Aug 2024 13:02:08 +0200
+
 libfm-ffmpeg-columns (0.2-1) testing; urgency=medium
 
   * Upstream v0.2
